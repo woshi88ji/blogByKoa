@@ -2,11 +2,13 @@
   {
     "username": "zs",
     "password": "60b0a8e5c0a852452a2c181c0190e86a",
-    "role": "一级管理员"
+    "role": "admin1",
+    "sessionId": "1"
   },
   {
     "username": "ls",
     "password": "60b0a8e5c0a852452a2c181c0190e86a",
-    "role": "二级管理员"
+    "role": "admin2",
+    "sessionId": "2"
   }
 ]

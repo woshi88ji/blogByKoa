@@ -20,8 +20,8 @@ app.use(body({
 // 设置session
 app.keys = fs.readFileSync('key.keys').toString().split('\n')
 app.use(session({
-  maxAge: 25 * 60 * 1000,
-  renew: true, 
+  maxAge: 25 * 60 * 1000,  // 有效期
+  renew: true,             // 自动续期
   signed: true
 }, app))
 

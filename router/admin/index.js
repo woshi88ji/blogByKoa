@@ -47,7 +47,7 @@ router.post('/login', async ctx => {
       ctx.redirect(`${ctx.HOST}/admin/login?errmsg=${encodeURIComponent('用户不存在')}`)
     } else {
       if (userInfo.password === result) {
-        ctx.session.role = userInfo.role
+        ctx.session.token = userInfo.sessionId
         ctx.redirect(`${ctx.HOST}/admin/admin`)
       } else {
         ctx.redirect(`${ctx.HOST}/admin/login?errmsg=${encodeURIComponent('密码错误')}`)
@@ -59,17 +59,51 @@ router.post('/login', async ctx => {
 })
 
 router.all('*', async (ctx, next) => {
-  if (ctx.session.role) {
+  if (ctx.session.token) {
     await next()
   } else {
     ctx.redirect(`${ctx.HOST}/admin/login`)
   }
 })
 
+// 后台首页
 router.get('/admin', async ctx => {
   await ctx.render('admin/admin', {
+    host: ctx.HOST
+  })
+})
+
+// 编辑文章
+router.get('/artical', async ctx => {
+  await ctx.render('admin/add_artical', {
    host: ctx.HOST
  })
 })
+router.post('/artical', async ctx => {
+  let { artical } = ctx.request.fields
+  /**
+   * 将数据放入数据库
+   */
+  ctx.body = 'ok'
+  // await ctx.redirect(`${ctx.HOST}/admin/add_artical`)
+})
 
+// 登出
+router.get('/logout', async ctx => {
+  ctx.session.token = null
+  await ctx.redirect(`${ctx.HOST}/admin/login`)
+})
+
+// 修改密码
+router.get('/change_pass', async ctx => {
+  await ctx.render('admin/change_password', {
+    host: ctx.HOST
+  })
+})
+
+router.post('/change_pass', async ctx => {
+  await ctx.redirect(`${ctx.HOST}/admin/admin`, {
+    host: ctx.HOST
+  })
+})
 module.exports = router.routes()
