@@ -27,7 +27,7 @@
     <div class="layui-header">
       <div class="layui-logo">Blog 后台管理</div>
       <ul class="layui-nav layui-layout-left">
-        <li class="layui-nav-item"><a href="">后台首页</a></li>
+        <li class="layui-nav-item"><a href="<%=host%>/admin/admin">后台首页</a></li>
       </ul>
       <ul class="layui-nav layui-layout-right">
         <li class="layui-nav-item">
@@ -49,31 +49,13 @@
       <div class="layui-side-scroll">
         <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
         <ul class="layui-nav layui-nav-tree " lay-accordion lay-filter="test">
-          <li class="layui-nav-item">
+          <li class="layui-nav-item layui-nav-itemed">
             <a class="" href="javascript:;">博文系统</a>
             <dl class="layui-nav-child layui-nav-itemed">
               <dd><a href="<%=host%>/admin/artical">编写文章</a></dd>
-              <dd><a href="javascript:;">文章管理</a></dd>
-              <dd><a href="javascript:;">数据统计</a></dd>
+              <dd><a href="<%=host%>/admin/manage">文章管理</a></dd>
             </dl>
           </li>
-          <!-- <li class="layui-nav-item">
-          <a href="javascript:;">快捷导航</a>
-          <dl class="layui-nav-child">
-            <dd><a href="javascript:;">CSDN</a></dd>
-            <dd><a href="javascript:;">Git</a></dd>
-            <dd><a href="javascript:;">码云</a></dd>
-            <dd><a href="javascript:;">谷歌翻译</a></dd>
-          </dl>
-        </li> -->
-          <!-- <li class="layui-nav-item">
-          <a class="" href="javascript:;">系统管理</a>
-          <dl class="layui-nav-child">
-            <dd><a href="javascript:;">站点设置</a></dd>
-            <dd><a href="javascript:;">广告设置</a></dd>
-            <dd><a href="javascript:;">友情链接</a></dd>
-          </dl>
-        </li> -->
         </ul>
       </div>
     </div>
@@ -84,29 +66,30 @@
         <div class='layui-row layui-col-space30'>
           <div class="layui-col-md4">
             <div class='box'>
-              <p>今日阅读量: </p>
-              <p>xxx条</p>
+              <p>文章总数: </p>
+              <p><%=artical_count%>篇</p>
             </div>
           </div>
           <div class="layui-col-md4">
             <div class='box'>
-            <p>今日新增评论</p> 
-            <p>xxx条</p> 
+            <p>冻结文章数</p> 
+            <p><%=frozed_count%>篇</p> 
             </div>
           </div>
-          <!-- <div class="layui-col-md4">
+          <div class="layui-col-md4">
             <div class='box'>
-              
+              <p>总阅读量</p>
+              <p><%=readNum%></p>
             </div>
-          </div> -->
+          </div>
+
         </div>
       </div>
     </div>
 
     <div class="layui-footer">
       <!-- 底部固定区域 -->
-      © <a href="https://gitee.com/XzcGroup/XzcBlogTemplate" target="_blank" title="XzcBlogTemplate">XzcBlogTemplate</a>
-      - 本套模板采用layui进行开发。
+      © - 本项目基于koa2 + ejs + mysql + jquery开发。
     </div>
   </div>
   <script src="<%=host%>/layui/layui.js"></script>

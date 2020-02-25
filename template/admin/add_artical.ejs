@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -9,114 +10,184 @@
 <style>
   #editor-body {
    border: 1px solid #ccc;
-   min-height: 500px;
+   min-height: 400px;
    margin-top: 10px
   }
+  dl[class ~=layui-anim] {
+    z-index: 10001
+  }
 </style>
-<body class="layui-layout-body">
-<div class="layui-layout layui-layout-admin">
-  <div class="layui-header">
-    <div class="layui-logo">Blog 后台管理</div>
-    <ul class="layui-nav layui-layout-left">
-      <li class="layui-nav-item"><a href="">后台首页</a></li>
-    </ul>
-    <ul class="layui-nav layui-layout-right">
-      <li class="layui-nav-item">
-        <a href="javascript:;">
-          <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-          影流之主
-        </a>
-        <dl class="layui-nav-child">
-          
-          <dd><a href="">修改密码</a></dd>
-          <dd><a href="">退出登录</a></dd>
-        </dl>
-      </li>
 
-    </ul>
-  </div>
-  
-  <div class="layui-side layui-bg-black">
-    <div class="layui-side-scroll">
-      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-      <ul class="layui-nav layui-nav-tree " lay-accordion  lay-filter="test">
-        <li class="layui-nav-item layui-nav-itemed">
-          <a class="" href="javascript:;">博文系统</a>
+<body class="layui-layout-body">
+  <div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+      <div class="layui-logo">Blog 后台管理</div>
+      <ul class="layui-nav layui-layout-left">
+        <li class="layui-nav-item"><a href="<%=host%>/admin/admin">后台首页</a></li>
+      </ul>
+      <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item">
+          <a href="javascript:;">
+            <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+            影流之主
+          </a>
           <dl class="layui-nav-child">
-            <dd class='layui-this'><a href="<%=host%>/admin/artical">编写文章</a></dd>
-            <dd><a href="javascript:;">文章管理</a></dd>
-            <dd><a href="javascript:;">数据统计</a></dd>
+            <dd><a href="<%=host%>/admin/change_pass">修改密码</a></dd>
+            <dd><a href="<%=host%>/admin/logout">退出登录</a></dd>
           </dl>
         </li>
-        
+
       </ul>
     </div>
-  </div>
-  
-  <div class="layui-body">
-    <!-- 内容主体区域 -->
-    <div style="padding: 15px;">
-      <div id='editor-title'></div>
-      <div id="editor-body">
-        
+
+    <div class="layui-side layui-bg-black">
+      <div class="layui-side-scroll">
+        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+        <ul class="layui-nav layui-nav-tree " lay-accordion lay-filter="test">
+          <li class="layui-nav-item layui-nav-itemed">
+            <a class="" href="javascript:;">博文系统</a>
+            <dl class="layui-nav-child">
+              <dd class='layui-this'><a href="<%=host%>/admin/artical">编写文章</a></dd>
+              <dd><a href="<%=host%>/admin/manage">文章管理</a></dd>
+            </dl>
+          </li>
+
+        </ul>
       </div>
-      <form class="layui-form" action="">
-        <div class='layui-input-inline'>
-            <select name="city" class=''>
-              <option value="">请选择文章类型</option>
-              <option value="0">北京</option>
-              <option value="1">上海</option>
-              <option value="2">广州</option>
-              <option value="3">深圳</option>
-              <option value="4">杭州</option>
-            </select>
-     </div>
-      <button type="button" id='btn1' class="layui-btn" style='margin-top: 10px'>保存为草稿</button>
-      <button type="button" id="btn2" class="layui-btn" style='margin-top: 10px'>发布</button>
-      </form>
-      
-     
+    </div>
+
+    <div class="layui-body">
+      <!-- 内容主体区域 -->
+      <div style="padding: 15px;">
+        <div id='editor-title'>
+        </div>
+
+
+        <form class="layui-form" action="" lay-filter='test' style='margin-top: 10px'>
+          <div class="layui-input-block" style='margin: 10px 0 0 '>
+            <input type="text" name="title"  required lay-verify="required" placeholder="请输入文章标题"
+              autocomplete="off" class="layui-input" value="<%=data.title%>">
+          </div>
+          <div class="layui-input-block" style='margin: 10px 0 0 '>
+            <textarea type="textarea" name="essentials"  required lay-verify="required" placeholder="请输入概要" autocomplete="off"
+              class="layui-textarea" ><%=data.essentials%></textarea>
+          </div>
+          <div id="editor-body">
+            <%-data.artical%>
+          </div>
+          <div class='layui-form-item'>
+            <div class='layui-input-inline' style='margin-top: 10px'>
+              <select name="type" required lay-verify="required" >
+                <option value="" >请选择文章类型</option>
+                <% if(data.type === 'javascript') { %>
+                  <option value="javascript" selected>javascript</option>
+                  <option value="nodejs" >nodejs</option>
+                  <option value="小程序" >小程序</option>
+                <% } else if(data.type === 'nodejs') { %>
+                  <option value="javascript">javascript</option>
+                  <option value="nodejs" selected>nodejs</option>
+                  <option value="小程序">小程序</option>
+                <% } else if(data.type === '小程序') { %>
+                  <option value="javascript">javascript</option>
+                  <option value="nodejs">nodejs</option>
+                  <option value="小程序" selected>小程序</option>
+                <% } else { %>
+                  <option value="javascript">javascript</option>
+                  <option value="nodejs">nodejs</option>
+                  <option value="小程序">小程序</option>
+                <% } %>
+              </select>
+              
+            </div>
+            <button style='margin-top: 10px' class="layui-btn" lay-submit lay-filter="formDemo">发布</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="layui-footer">
+      <!-- 底部固定区域 -->
+      © - 本项目基于koa2 + ejs + mysql 开发。
     </div>
   </div>
-  
-  <div class="layui-footer">
-    <!-- 底部固定区域 -->
-    ©<a href="https://gitee.com/XzcGroup/XzcBlogTemplate" target="_blank" title="XzcBlogTemplate">XzcBlogTemplate</a> - 本套模板采用layui进行开发。
-  </div>
-</div>
-<script src="<%=host%>/layui/layui.js"></script>
-<script src='<%=host%>/javascript/wangEditor.min.js'></script>
-<script src="<%=host%>/javascript/jquery.min.js"></script>
-<script>
-//JavaScript代码区域
-layui.use('element', function(){
-  var element = layui.element;
-  
-});
+  <script src="<%=host%>/layui/layui.js"></script>
+  <script src='<%=host%>/javascript/wangEditor.min.js'></script>
+  <script src="<%=host%>/javascript/jquery.min.js"></script>
+  <script>
+    //JavaScript代码区域
+    layui.use('element', function () {
+      var element = layui.element;
 
-layui.use('form',() =>{
-  let form = layui.form
-})
-  var E = window.wangEditor
-  var editor = new E('#editor-title', '#editor-body')
-  // 或者 var editor = new E( document.getElementById('editor') )
-  editor.create()
+    });
+    let id = "<%=data.id%>" || ''
+    console.log(id)
+    function postDate(obj) {
+      $.ajax({
+        method: 'POST',
+        url: `<%=host%>/admin/artical?id=${id}`,
+        data: {
+          ...obj, artical: editor.txt.html()
+        },
+        success() {
+          layer.msg('提交成功')
+        }
+      })
+    }
+    layui.use('form', () => {
+      let form = layui.form
+      form.on('submit', data => {
+        postDate(data.field)
+        return false
+      })
 
-  document.getElementById('btn2').addEventListener('click', () => {
-    console.log(editor.txt.html())
-    $.ajax({
-      url: '<%=host%>' + '/admin/artical',
-      method: 'post',
-      data: {
-        artical: editor.txt.html()
-
-      },
-      success() {
-        alert('chegngong ')
-      }
+      
     })
-  })
+    var E = window.wangEditor
+    var editor = new E('#editor-title', '#editor-body')
+    //开启配置
+    editor.customConfig.debug = true
+    // 隐藏“网络图片”tab
+    editor.customConfig.showLinkImg = true
+    // 关闭粘贴内容中的样式
+    editor.customConfig.pasteFilterStyle = false
+    // 忽略粘贴内容中的图片
+    editor.customConfig.pasteIgnoreImg = false
+    // 将图片大小限制为 3M
+    editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024
+    // 限制一次最多上传 1 张图片
+    editor.customConfig.uploadImgMaxLength = 1
+    editor.customConfig.uploadImgServer = '<%=host%>/admin/uploadImg'
+    editor.customConfig.uploadFileName = 'myFileName'
 
-</script>
+    // 使用 base64 保存图片
+    editor.customConfig.uploadImgShowBase64 = true
+
+    editor.customConfig.uploadImgHooks = {
+      customInsert: function (insertImg, result, editor) {
+        var url = result.data;//获取后台返回的url
+        console.log("image url = " + url)
+        insertImg(url);
+      }
+    };
+
+    //上传视频
+    editor.customConfig.uploadVideoServer = 'uploadVideo'
+
+    editor.customConfig.uploadVideoHooks = {
+      customInsert: function (insertImg, result, editor) {
+        var url = result.data;//获取后台返回的url
+        console.log("video url = " + url)
+        insertImg(url);
+      }
+    };
+    editor.create();
+
+    // document.getElementById('btn').addEventListener('click', () => {
+    //   console.log(document.getElementById('title').value)
+    //   console.log(editor.txt.html())
+    // })
+
+  </script>
 </body>
+
 </html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="renderer" content="webkit">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  	<meta name="apple-mobile-web-app-status-bar-style" content="black"> 
+  	<meta name="apple-mobile-web-app-capable" content="yes">
+  	<meta name="format-detection" content="telephone=no">
+	<title>详情 - Blog</title>
+	<link rel="stylesheet" href="<%=host%>/layui/css/layui.css">
+	<link rel="stylesheet" href="<%=host%>/css/common.css">
+	<link rel="stylesheet" href="<%=host%>/css/detail.css">
+</head>
+<body>
+	<header class="layui-bg-cyan l-header">
+		<nav class="layui-container">
+			<div class="layui-row">
+					<div class="layui-col-md2" style="line-height: 60px; font-weight: 600; text-align: center">
+						Blog 前台页面
+					</div>
+			    <div class="layui-col-md8 layui-hide-xs">
+						<ul class="layui-nav layui-bg-cyan">
+							<li class="layui-nav-item ">
+								<a href="<%=host%>/index">首页</a>
+							</li>
+							<li class="layui-nav-item">
+								<a href="<%=host%>/index/js">javascript</span></a>
+							</li>
+							<li class="layui-nav-item">
+								<a href="<%=host%>/index/node">node</a>
+							</li>
+							<li class="layui-nav-item">
+								<a href="<%=host%>/index/wx">小程序</a>
+							</li>
+						</ul>
+			    </div>
+		   	</div>
+		</nav>
+	</header>
+
+	<div class="layui-container l-container">
+		<div class="layui-row layui-col-space20">
+			<div class="layui-col-md8">
+				<div class="layui-row">
+					<div class="layui-col-md12">
+						<div class="main">
+							<div class="title">
+								<p><%=data.title%></p>
+								<div class="layui-row stat">
+									<div class="layui-col-md4 layui-col-sm4 layui-col-xs12">发布时间：<em><%=data.add_time%></em></div>
+									<div class="layui-col-md4 layui-col-sm4 layui-col-xs12">分类：<a href="javascript:;"><%=data.type%></a></div>
+									<div class="layui-col-md4 layui-col-sm4 layui-col-xs12">
+										
+											<i class="layui-icon layui-icon-read"></i>
+											<em><%=data.read_num%>次阅读</em>
+									
+									</div>
+								</div>
+							</div>
+
+
+							<div class="content">
+								<p style='margin-bottom: 10px'><img src="<%=host%>/images/detail.jpg" width="100%" height="200px"></p>
+						    <div id='context'>
+									<%-data.artical%>
+								</div>
+
+							</div>
+							<div class="copyright">
+								<p>本文链接：<a href="javascript:void(0)"><%=host%>/index/detail?id=<%=data.id%></a></p>
+								<p>转载声明：本站文章若无特别说明，皆为原创，转载请注明来源：影流之主，谢谢!</p>
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-md12 margin20"></div>
+				</div>
+	        </div>
+
+
+	        <div class="layui-col-md4">
+				<div class="layui-row">
+					<div class="layui-col-md12">
+						<div class="layui-card">
+							<div class="layui-card-header">
+								<span>
+									热门文章
+								</span>
+							</div>
+							<ul class="layui-card-body">
+					
+								<% host_artical.forEach((item) => {%>
+								<li>
+									<p style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap; line-height: 40px"><a href="<%=host%>/index/detail?id=<%=item.id%>">
+											<%=item.title%></a></p>
+								</li>
+								<%})%>
+							</ul>
+						</div>
+					</div>
+					
+				</div>
+	        </div>
+		</div>
+	</div>
+
+	<!-- 尾部 -->
+	<footer class="layui-bg-cyan l-footer" >
+		<div class="layui-container">
+			<div class="layui-row">
+				<p>个人博客练手项目, 技术栈为 koa2 + ejs + mysql</p>
+			</div>
+		</div>
+	</footer>
+</body>
+<script src="<%=host%>/layui/layui.all.js"></script>
+<script>
+	// let artical = '<%=data.artical%>'
+	// console.log(artical)
+	// console.log('<h2>fdsf</h2>')
+	// document.getElementById('context').innerHTML = artical + ''
+</script>
+</html>

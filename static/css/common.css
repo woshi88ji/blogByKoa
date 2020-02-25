@@ -1,5 +1,16 @@
 /*common styles*/
-body{background: #f1f1f1;}
+html, body {height: 100%}
+.l-header {
+  flex: 0 0 auto
+}
+.l-container {
+  flex: 1 0 auto
+}
+.l-footer {
+  flex: 0 0 auto
+}
+
+body{background: #f1f1f1; display: flex; flex-direction: column}
 header{margin-bottom: 20px;height: 60px;}
 .layui-nav-child dd{text-align: center;}
 

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>博客后台</title>
+  <link rel="stylesheet" href="<%=host%>/layui/css/layui.css">
+</head>
+<style>
+  #editor-body {
+    border: 1px solid #ccc;
+    min-height: 500px;
+    margin-top: 10px
+  }
+</style>
+
+<body class="layui-layout-body">
+  <div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+      <div class="layui-logo">Blog 后台管理</div>
+      <ul class="layui-nav layui-layout-left">
+        <li class="layui-nav-item"><a href="<%=host%>/admin/admin">后台首页</a></li>
+      </ul>
+      <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item">
+          <a href="javascript:;">
+            <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+            影流之主
+          </a>
+          <dl class="layui-nav-child">
+
+            <dd><a href="<%=host%>/admin/change_pass">修改密码</a></dd>
+            <dd><a href="<%=host%>/admin/logout">退出登录</a></dd>
+          </dl>
+        </li>
+
+      </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+      <div class="layui-side-scroll">
+        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+        <ul class="layui-nav layui-nav-tree " lay-accordion lay-filter="test">
+          <li class="layui-nav-item layui-nav-itemed">
+            <a class="" href="javascript:;">博文系统</a>
+            <dl class="layui-nav-child layui-nav-itemed">
+              <dd><a href="<%=host%>/admin/artical">编写文章</a></dd>
+              <dd class='layui-this'><a href="<%=host%>/admin/manage">文章管理</a></dd>
+            </dl>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="layui-body" style="padding: 10px">
+      <!-- 内容主体区域 -->
+      <table class="layui-table" lay-data="{height:'full-140', url:'/admin/blog-list', page:{limit: 20 }, id:'test'}" lay-filter="test">
+        <thead>
+          <tr>
+            <th lay-data="{field:'id', width:80}">ID</th>
+            <th lay-data="{field:'title'}">标题</th>
+            <th lay-data="{field:'type', width:100}">类别</th>
+            <th lay-data="{field:'add_time', width:200}">发布时间</th>
+            <th lay-data="{field:'read_num', width:100}">阅读量</th>
+            <th lay-data="{fixed: 'right', title: '冻结', toolbar: '#froze', width: 150}"></th>
+            <th lay-data="{fixed: 'right', title: '操作', toolbar: '#bar', width: 150}"></th>
+          </tr>
+          <script type="text/html" id="bar">
+            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+          </script>
+          <script type="text/html" id="froze">
+            {{#  if(d.frozed==1){ }}
+                <input type="checkbox" name="status" lay-skin="switch" checked   lay-text="开启|关闭" value={{d.id}}    lay-filter="status" >
+            {{#  } else { }}
+                <input type="checkbox" name="status" lay-skin="switch"  lay-text="开启|关闭" value={{d.id}}  lay-filter="status" >
+            {{#  } }}
+
+          </script>
+        </thead>
+      </table>
+    </div>
+
+    <div class="layui-footer">
+      <!-- 底部固定区域 -->
+      © - 本项目基于koa2 + ejs + mysql 开发。
+    </div>
+  </div>
+  <script src="<%=host%>/layui/layui.js"></script>
+  <script src="<%=host%>/javascript/jquery.min.js"></script>
+  <script>
+
+    layui.use('element', function () {
+      var element = layui.element;
+
+    });
+    layui.use('table', () => {
+      let table = layui.table
+      // table.init('test')
+      table.on('tool(test)', function(obj) {
+        let data = obj.data
+        let layEvent = obj.event
+        if(layEvent === 'edit') {
+         window.location.href = `<%=host%>/admin/artical?id=${data.id}`
+        }else{
+          $.ajax({
+            method: 'delete',
+            url: `<%=host%>/admin/delete?id=${data.id}`,
+            success: () =>{
+              layer.msg('修改成功')
+              window.location.reload()
+            }
+          })
+        }
+      })
+    })
+
+    layui.use('form', () => {
+      let form = layui.form
+      form.on('switch(status)', data => {
+        var id = data.value;
+        var status = data.elem.checked ? 1 : 0;
+        $.ajax({
+          method: 'post',
+          url: `<%=host%>/admin/change_frozed`,
+          data: {
+            id: id,
+            frozed: status
+          },
+          success() {
+            layer.msg('修改成功')
+          }
+        })
+      })
+    })
+  </script>
+</body>
+
+</html>
