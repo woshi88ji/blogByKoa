@@ -14,6 +14,9 @@
 #### 博客内容编写页面
 ![Image](https://github.com/woshi88ji/blogByKoa/blob/master/img/artical.png)
 
+#### 博客文章管理页面
+![Image](https://github.com/woshi88ji/blogByKoa/blob/master/img/manage.png)
+
 #### 博客首页
 ![Image](https://github.com/woshi88ji/blogByKoa/blob/master/img/index.png)
 
